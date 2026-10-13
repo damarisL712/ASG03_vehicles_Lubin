@@ -1,7 +1,7 @@
 """
 The main entry point for ASG03 Vehicle Hierarchy with ABC
 
-Author: Mr. Ri
+Author: Damaris Lubin 
 """
 
 from manufacturer import Manufacturer
@@ -23,6 +23,9 @@ def main():
     print(honda) # printing the name and the country  
     print(bmw) # printing the name and the country  
     print(toyota) # printing the name and the country 
+
+    print(ford.get_name)
+    print(ford.get_country)
 
 if __name__ == "__main__":
     main()
