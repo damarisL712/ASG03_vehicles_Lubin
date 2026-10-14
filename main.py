@@ -5,6 +5,7 @@ Author: Damaris Lubin
 """
 
 from manufacturer import Manufacturer
+from auto_model import AutoModel
 
 def main():
 
@@ -18,5 +19,11 @@ def main():
     honda = Manufacturer("Honda", "Japan")
     bmw = Manufacturer("BMW", "Germany")
     toyota = Manufacturer("Toyota", "Japan")
+
+    year_list = [2020,2021]
+
+    model1 = AutoModel("F150",True,year_list)
+
+    print(model1)
 if __name__ == "__main__":
     main()
