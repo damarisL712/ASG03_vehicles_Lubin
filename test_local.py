@@ -10,6 +10,8 @@ Run with:
 import pytest
 from manufacturer import Manufacturer
 from auto_model import AutoModel
+from vehicle import Vehicle
+from sedan import Sedan
 
 class TestManufacturer: 
     # tests that the constructor sotres the name and country correctly
@@ -76,3 +78,42 @@ class TestAutoModel:
         returned_years.append(2002)
 
         assert am.years == [2000, 2001]
+
+class TestVehicle:
+    # Test that Vehicle cannot be created directly because it is abstract.
+    def test_vehicle_is_abstract(self):
+        manufacturer = Manufacturer("Ford", "USA")
+        model = AutoModel("F150", True, [2020, 2021, 2022])
+
+        with pytest.raises(TypeError):
+            Vehicle(manufacturer, model, 20.0)
+
+
+class TestSedan:
+    # Test that the Sedan constructor and inherited getters work correctly.
+    def test_sedan_constructor_and_getters(self):
+        sedan = Sedan(Manufacturer("Honda", "Japan"), AutoModel("Civic", False, [1996, 1997, 1998]), 28.0)
+        assert sedan.manufacturer.name == "Honda"
+        assert sedan.manufacturer.country == "Japan"
+        assert sedan.model.name == "Civic"
+        assert sedan.mpg == 28.0
+
+    # Test that a sedan always has four wheels.
+    def test_number_of_wheels(self):
+        sedan = Sedan(Manufacturer("Honda", "Japan"), AutoModel("Civic", False, [1996, 1997, 1998]), 28.0)
+        assert sedan.number_of_wheels() == 4
+
+    # Test that the release year comes from the AutoModel.
+    def test_release_year(self):
+        sedan = Sedan(Manufacturer("BMW", "Germany"), AutoModel("M3 Limited", False, [2015, 2016, 2017, 2018]), 30.0)
+        assert sedan.release_year == 2015
+
+    # Test how far the sedan can travel with a given number of gallons.
+    def test_how_far_with(self):
+        sedan = Sedan(Manufacturer("Honda", "Japan"), AutoModel("Civic", False, [1996, 1997, 1998]), 28.0)
+        assert sedan.how_far_with(10) == 280.0
+
+    # Test that the Sedan string is formatted correctly.
+    def test_sedan_str(self):
+        sedan = Sedan(Manufacturer("Honda", "Japan"), AutoModel("Civic", False, [1996, 1997, 1998]), 28.0)
+        assert str(sedan) == "(Honda, Japan) Civic in production = False, release year: 1996, mpg: 28.00"
