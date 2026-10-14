@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
-
+# Import total_ordering to automatically provide additional comparison methods.
+from functools import total_ordering
 from manufacturer import Manufacturer
 from auto_model import AutoModel
 
@@ -35,3 +36,15 @@ class Vehicle(ABC):
     @abstractmethod
     def number_of_wheels(self) -> int: 
         ...
+    
+    # --- Comprable using @functools.total_ordering
+
+    # Check if two vehicles have the same release year.
+
+    def __eq__(self, other) -> bool:
+        return self.release_year == other.release_year
+    
+    # Check if this vehicle was released before another vehicle.
+    def __lt__(self, other):
+        return self.release_year < other.release_year
+
