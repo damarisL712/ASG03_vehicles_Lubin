@@ -12,6 +12,7 @@ from manufacturer import Manufacturer
 from auto_model import AutoModel
 from vehicle import Vehicle
 from sedan import Sedan
+from truck import Truck
 
 class TestManufacturer: 
     # tests that the constructor sotres the name and country correctly
@@ -117,3 +118,39 @@ class TestSedan:
     def test_sedan_str(self):
         sedan = Sedan(Manufacturer("Honda", "Japan"), AutoModel("Civic", False, [1996, 1997, 1998]), 28.0)
         assert str(sedan) == "(Honda, Japan) Civic in production = False, release year: 1996, mpg: 28.00"
+
+class TestTruck:
+    # Test that a truck is not dually by default.
+    def test_default_not_dually(self):
+        truck = Truck(Manufacturer("Ford", "USA"), AutoModel("F150", True, [2020, 2021, 2022]), 20.0)
+        assert truck.is_dually is False
+
+    # Test that a non-dually truck has four wheels.
+    def test_non_dually_wheels(self):
+        truck = Truck(Manufacturer("Ford", "USA"), AutoModel("F150", True, [2020, 2021, 2022]), 20.0)
+        assert truck.number_of_wheels() == 4
+
+    # Test that a dually truck has six wheels.
+    def test_dually_wheels(self):
+        truck = Truck(Manufacturer("Toyota", "Japan"), AutoModel("Tundra", False, [1987, 1988]), 30.0, True)
+        assert truck.number_of_wheels() == 6
+
+    # Test that the dually property returns True when set.
+    def test_is_dually_true(self):
+        truck = Truck(Manufacturer("Toyota", "Japan"), AutoModel("Tundra", False, [1987, 1988]), 30.0, True)
+        assert truck.is_dually is True
+
+    # Test that the release year comes from AutoModel.
+    def test_release_year(self):
+        truck = Truck(Manufacturer("Toyota", "Japan"), AutoModel("Tundra", False, [1987, 1988]), 30.0, True)
+        assert truck.release_year == 1987
+
+    # Test how far the truck can travel with a given number of gallons.
+    def test_how_far_with(self):
+        truck = Truck(Manufacturer("Toyota", "Japan"), AutoModel("Tundra", False, [1987, 1988]), 30.0, True)
+        assert truck.how_far_with(5) == 150.0
+
+    # Test that the Truck string is formatted correctly.
+    def test_truck_str(self):
+        truck = Truck(Manufacturer("Toyota", "Japan"), AutoModel("Tundra", False, [1987, 1988]), 30.0, True)
+        assert str(truck) == "(Toyota, Japan) Tundra in production = False, release year: 1987, mpg: 30.00 is dually truck: True"
