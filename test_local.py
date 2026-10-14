@@ -22,9 +22,9 @@ class TestManufacturer:
 
     def test_manufacturer_getter_name(self):
         manu = Manufacturer("Honda", "Japan")
-        assert manu.get_name == "Honda"
+        assert manu.name == "Honda"
     
 
     def test_manufacturer_getter_country(self):
         manu = Manufacturer("BMW", "Germany")
-        assert manu.get_country == "Germany"
+        assert manu.country == "Germany"

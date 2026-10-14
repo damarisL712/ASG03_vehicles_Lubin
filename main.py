@@ -18,14 +18,5 @@ def main():
     honda = Manufacturer("Honda", "Japan")
     bmw = Manufacturer("BMW", "Germany")
     toyota = Manufacturer("Toyota", "Japan")
-
-    print(ford) # printing the name and the country  
-    print(honda) # printing the name and the country  
-    print(bmw) # printing the name and the country  
-    print(toyota) # printing the name and the country 
-
-    print(ford.get_name)
-    print(ford.get_country)
-
 if __name__ == "__main__":
     main()
