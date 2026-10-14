@@ -16,7 +16,10 @@ class Truck(Vehicle):
 
 
     def number_of_wheels(self) -> int:
-        return 4
+        if self._is_dually == True: 
+            return 6
+        else:
+            return 4
 
     def __str__(self):
         # format: (<manufacturer>) <model>, mpg: <mpg formatted to 2 decimal places>
