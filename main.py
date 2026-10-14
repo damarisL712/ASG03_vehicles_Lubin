@@ -6,6 +6,9 @@ Author: Damaris Lubin
 
 from manufacturer import Manufacturer
 from auto_model import AutoModel
+from vehicle import Vehicle
+from sedan import Sedan
+from truck import Truck
 
 def main():
 
@@ -22,8 +25,18 @@ def main():
 
     year_list = [2020,2021]
 
-    model1 = AutoModel("F150",True,year_list)
+    # first creation of models
+    f150_model = AutoModel("F150",True,year_list)
+    civic_model = AutoModel("Civic", False, list(range(1996, 1999)))
 
-    print(model1)
+
+    civic = Sedan(honda, civic_model, 28.0)
+    f150 = Truck(ford, f150_model, 20.0)
+
+
+    print(civic)
+    print(f150)
+
+
 if __name__ == "__main__":
     main()
