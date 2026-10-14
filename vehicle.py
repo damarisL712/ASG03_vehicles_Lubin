@@ -21,7 +21,13 @@ class Vehicle(ABC):
     @property
     def mpg(self) -> float:
         return self._mpg
+    
+    @property
+    # using inheritance in the way of getting the first year from auto model
+    def release_year(self) -> int:
+        return self._model.first_year
 
+    # Concrete method
     def how_far_with(self, num_of_gallons: int) -> float:
         return self._mpg * num_of_gallons
 
