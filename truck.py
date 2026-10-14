@@ -14,7 +14,7 @@ class Truck(Vehicle):
     def is_dually(self) -> bool:
         return self._is_dually
 
-
+    # Return 6 wheels for a dually truck and 4 otherwise.
     def number_of_wheels(self) -> int:
         if self._is_dually == True: 
             return 6
@@ -25,5 +25,5 @@ class Truck(Vehicle):
         # format: (<manufacturer>) <model>, mpg: <mpg formatted to 2 decimal places>
         # Example: (Honda, Japan) Civic in production = False, release year: 1996, mpg: 28.00
 
-        return f"({self._manufacturer}) {self._model}, mpg: {self._mpg:.2f} is dually truck: {self._is_dually} "
+        return f"({self._manufacturer}) {self._model}, mpg: {self._mpg:.2f} is dually truck: {self._is_dually}"
 
