@@ -40,11 +40,18 @@ class Vehicle(ABC):
     # --- Comprable using @functools.total_ordering
 
     # Check if two vehicles have the same release year.
-
     def __eq__(self, other) -> bool:
+        if not isinstance(other, Vehicle):
+            return NotImplemented
         return self.release_year == other.release_year
     
     # Check if this vehicle was released before another vehicle.
     def __lt__(self, other):
+        if not isinstance(other, Vehicle):
+            return NotImplemented
         return self.release_year < other.release_year
-
+        
+    # Return a hash value based on the vehicle's release year.
+    def __hash__(self) -> int:
+        return hash(self.release_year)
+    
