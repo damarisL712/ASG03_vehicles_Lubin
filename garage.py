@@ -10,7 +10,7 @@ class Garage:
     @property
     def vehicles(self) -> list[Vehicle]:
         # defensive copy
-        return list[self._vehicles]
+        return list(self._vehicles)
 
     # add_vehicle(vehicle)	Appends a Vehicle to the list. Returns None.
     def add_vehicle(self, vehicle: Vehicle) -> None:
@@ -26,4 +26,6 @@ class Garage:
 
     # __str__	Returns each vehicle on its own line.
     def __str__(self):
-        return f"Garage: ({self._vehicles!r})"
+        # creates empty string and joins each of the vehicles as a string by iterating
+        # through each of the vehicles
+        return "\n".join(str(v) for v in self._vehicles)
