@@ -154,3 +154,43 @@ class TestTruck:
     def test_truck_str(self):
         truck = Truck(Manufacturer("Toyota", "Japan"), AutoModel("Tundra", False, [1987, 1988]), 30.0, True)
         assert str(truck) == "(Toyota, Japan) Tundra in production = False, release year: 1987, mpg: 30.00 is dually truck: True"
+        
+
+class TestVehicleComparison:
+
+    # Test that an older vehicle is less than a newer vehicle.
+    def test_less_than(self):
+        sedan_1996 = Sedan(Manufacturer("Honda", "Japan"), AutoModel("Civic", False, [1996, 1997]), 28.0)
+        sedan_2015 = Sedan(Manufacturer("BMW", "Germany"), AutoModel("M3 Limited", False, [2015, 2016]), 30.0)
+        assert sedan_1996 < sedan_2015
+
+    # Test that vehicles with the same release year are equal.
+    def test_equal_release_year(self):
+        sedan_1996 = Sedan(Manufacturer("Honda", "Japan"), AutoModel("Civic", False, [1996, 1997]), 28.0)
+        truck_1996 = Truck(Manufacturer("Chevy", "USA"), AutoModel("Silverado", False, [1996]), 18.0)
+        assert sedan_1996 == truck_1996
+
+    # Test that vehicles with different release years are not equal.
+    def test_not_equal_release_year(self):
+        sedan_1996 = Sedan(Manufacturer("Honda", "Japan"), AutoModel("Civic", False, [1996, 1997]), 28.0)
+        sedan_2015 = Sedan(Manufacturer("BMW", "Germany"), AutoModel("M3 Limited", False, [2015, 2016]), 30.0)
+        assert sedan_1996 != sedan_2015
+
+    # Test that a newer vehicle is greater than an older vehicle.
+    def test_greater_than(self):
+        truck_2020 = Truck(Manufacturer("Ford", "USA"), AutoModel("F150", True, [2020, 2021]), 20.0)
+        sedan_2015 = Sedan(Manufacturer("BMW", "Germany"), AutoModel("M3 Limited", False, [2015, 2016]), 30.0)
+        assert truck_2020 > sedan_2015
+
+    # Test that vehicles can be sorted by release year.
+    def test_sorted_by_release_year(self):
+        sedan_1996 = Sedan(Manufacturer("Honda", "Japan"), AutoModel("Civic", False, [1996, 1997]), 28.0)
+        sedan_2015 = Sedan(Manufacturer("BMW", "Germany"), AutoModel("M3 Limited", False, [2015, 2016]), 30.0)
+        truck_2020 = Truck(Manufacturer("Ford", "USA"), AutoModel("F150", True, [2020, 2021]), 20.0)
+
+        vehicles = [truck_2020, sedan_1996, sedan_2015]
+        sorted_vehicles = sorted(vehicles)
+
+        assert sorted_vehicles[0].release_year == 1996
+        assert sorted_vehicles[1].release_year == 2015
+        assert sorted_vehicles[2].release_year == 2020
