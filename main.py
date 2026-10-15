@@ -9,33 +9,46 @@ from auto_model import AutoModel
 from vehicle import Vehicle
 from sedan import Sedan
 from truck import Truck
+from garage import Garage
 
 def main():
 
-    """
-    (Ford, USA) F150 in production = True,  release year: 2020, mpg: 20.00 is dually truck: False
-    (Honda, Japan) Civic in production = False,  release year: 1996, mpg: 28.00
-    (BMW, Germany) M3 Limited in production = False,  release year: 2015, mpg: 30.00
-    (Toyota, Ja`pan) Tundra in production = False,  release year: 1987, mpg: 30.00 is dually truck: True
-    """
+# Manufacturers
     ford = Manufacturer("Ford", "USA")
     honda = Manufacturer("Honda", "Japan")
     bmw = Manufacturer("BMW", "Germany")
     toyota = Manufacturer("Toyota", "Japan")
 
-    year_list = [2020,2021]
-
-    # first creation of models
-    f150_model = AutoModel("F150",True,year_list)
+# models 
+    f150_model = AutoModel("F150", True, list(range(2020, 2023)))
     civic_model = AutoModel("Civic", False, list(range(1996, 1999)))
+    m3_model = AutoModel("M3 Limited", False, list(range(2015, 2019)))
+    tundra_model = AutoModel("Tundra", False, list(range(1987, 1989)))
 
+# vehicles 
 
-    civic = Sedan(honda, civic_model, 28.0)
+    # not a dually (set as default)
     f150 = Truck(ford, f150_model, 20.0)
+    civic = Sedan(honda, civic_model, 28.0)
+    m3 = Sedan(bmw, m3_model, 30.0)
+    # a dually
+    tundra = Truck(toyota, tundra_model, 30.0, is_dually=True) 
 
+    g = Garage()
+    g.add_vehicle(f150)
+    g.add_vehicle(civic)
+    g.add_vehicle(m3)
+    g.add_vehicle(tundra)
 
-    print(civic)
-    print(f150)
+    print("Before sorting: ")
+    print(g)
+    print()
+
+    # sort all the vehicles in order
+    g.sort_by_release_year()
+
+    print("After sorting: ")
+    print(g)
 
 
 if __name__ == "__main__":
