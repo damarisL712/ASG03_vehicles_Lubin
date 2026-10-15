@@ -13,6 +13,7 @@ from auto_model import AutoModel
 from vehicle import Vehicle
 from sedan import Sedan
 from truck import Truck
+from garage import Garage
 
 class TestManufacturer: 
     # tests that the constructor sotres the name and country correctly
@@ -154,7 +155,7 @@ class TestTruck:
     def test_truck_str(self):
         truck = Truck(Manufacturer("Toyota", "Japan"), AutoModel("Tundra", False, [1987, 1988]), 30.0, True)
         assert str(truck) == "(Toyota, Japan) Tundra in production = False, release year: 1987, mpg: 30.00 is dually truck: True"
-        
+
 
 class TestVehicleComparison:
 
@@ -194,3 +195,74 @@ class TestVehicleComparison:
         assert sorted_vehicles[0].release_year == 1996
         assert sorted_vehicles[1].release_year == 2015
         assert sorted_vehicles[2].release_year == 2020
+    
+
+class TestGarage:
+
+    # Test that a new garage starts empty.
+    def test_garage_starts_empty(self):
+        garage = Garage()
+        assert len(garage.vehicles) == 0
+
+    # Test that a vehicle can be added to the garage.
+    def test_add_vehicle(self):
+        garage = Garage()
+        sedan = Sedan(Manufacturer("Honda", "Japan"), AutoModel("Civic", False, [1996, 1997]), 28.0)
+        garage.add_vehicle(sedan)
+        assert len(garage.vehicles) == 1
+
+    # Test that vehicles returns a copy of the internal list.
+    def test_vehicles_returns_copy(self):
+        garage = Garage()
+        sedan = Sedan(Manufacturer("Honda", "Japan"), AutoModel("Civic", False, [1996, 1997]), 28.0)
+        garage.add_vehicle(sedan)
+
+        copied_list = garage.vehicles
+        copied_list.clear()
+
+        assert len(garage.vehicles) == 1
+
+    # Test that empty_garage removes all vehicles.
+    def test_empty_garage(self):
+        garage = Garage()
+        sedan = Sedan(Manufacturer("Honda", "Japan"), AutoModel("Civic", False, [1996, 1997]), 28.0)
+        garage.add_vehicle(sedan)
+        garage.empty_garage()
+        assert len(garage.vehicles) == 0
+
+    # Test that the garage can still be used after being emptied.
+    def test_add_after_empty(self):
+        garage = Garage()
+        sedan = Sedan(Manufacturer("Honda", "Japan"), AutoModel("Civic", False, [1996, 1997]), 28.0)
+        garage.add_vehicle(sedan)
+        garage.empty_garage()
+
+        truck = Truck(Manufacturer("Ford", "USA"), AutoModel("F150", True, [2020, 2021]), 20.0)
+        garage.add_vehicle(truck)
+
+        assert len(garage.vehicles) == 1
+
+    # Test that vehicles are sorted by release year.
+    def test_sort_by_release_year(self):
+        garage = Garage()
+        garage.add_vehicle(Truck(Manufacturer("Ford", "USA"), AutoModel("F150", True, [2020, 2021]), 20.0))
+        garage.add_vehicle(Sedan(Manufacturer("Honda", "Japan"), AutoModel("Civic", False, [1996, 1997]), 28.0))
+        garage.add_vehicle(Truck(Manufacturer("Toyota", "Japan"), AutoModel("Tundra", False, [1987, 1988]), 30.0, True))
+
+        garage.sort_by_release_year()
+
+        assert garage.vehicles[0].release_year == 1987
+        assert garage.vehicles[1].release_year == 1996
+        assert garage.vehicles[2].release_year == 2020
+
+    # Test that each vehicle appears on its own line.
+    def test_garage_str(self):
+        garage = Garage()
+        garage.add_vehicle(Sedan(Manufacturer("Honda", "Japan"), AutoModel("Civic", False, [1996, 1997]), 28.0))
+        garage.add_vehicle(Truck(Manufacturer("Ford", "USA"), AutoModel("F150", True, [2020, 2021]), 20.0))
+
+        lines = str(garage).split("\n")
+
+        assert len(lines) == 2
+        assert "Civic" in lines[0]
+        assert "F150" in lines[1]
